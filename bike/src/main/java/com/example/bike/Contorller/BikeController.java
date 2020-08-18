@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/bikes")
+@CrossOrigin(origins = "http://localhost:4200")
 public class BikeController {
     @Autowired
     private final IBikeService bikeService;
@@ -22,15 +23,15 @@ public class BikeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Bike>> list() {
+    public List<Bike> list() {
         List<Bike> bikes = bikeService.list();
-        return new ResponseEntity<List<Bike>>(bikes, HttpStatus.OK);
+        return bikes;
     }
 
     @PostMapping
     public ResponseEntity<Bike> createBike(@RequestBody Bike bike) {
         bikeService.createBike(bike);
-        return new ResponseEntity<Bike>(bike,HttpStatus.OK);
+        return  ResponseEntity.ok().body(bike);
     }
 
     @GetMapping("/{id}")
